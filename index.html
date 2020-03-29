@@ -1,0 +1,101 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣配音数据采集器</title>
+    <link rel="stylesheet" href="./vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- load JSON file (include share URL)-->
+
+        <form class="input-group mb-3">
+            <input type="search" autocomplete="off" autocorrect="off" class="form-control search-input" id="search-input" placeholder="请将趣配音分享链接粘贴于此处" aria-label="请将趣配音分享链接粘贴于此处" aria-describedby="button-search">
+            <!-- <input type="search" autocomplete="off" autocorrect="off" maxlength="64" id="index-kw" name="word" class="se-input adjust-input" data-placeholder="" data-sa="" data-sug="1"> -->
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-search">查询</button>
+            </div>
+        </form>
+
+        <div class="alert alert-primary single-search detail no-display">
+            <div class="col author-info">
+                <div class="box-inline">
+                    <div class="const">用户ID：</div>
+                    <div class="getdata user-id"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">昵称：</div>
+                    <div class="getdata nickname"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">注册天数：</div>
+                    <div class="getdata regday"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">作品数量：</div>
+                    <div class="getdata zptotal"></div>
+                </div>
+                <!-- <hr>
+                <div class="box-inline">
+                    <div class="const">近期作品：</div>
+                    <div class="getdata recent"></div>
+                </div> -->
+
+            </div>
+            <div class="col">
+
+                <div class="box-inline">
+                    <div class="const">作品名称：</div>
+                    <div class="getdata zpname"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">上传时间：</div>
+                    <div class="getdata uploadtime"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">播放量：</div>
+                    <div class="getdata playtime"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">点赞数：</div>
+                    <div class="getdata favnum"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">统计时间：</div>
+                    <div class="getdata timestamp"></div>
+                </div>
+                <hr>
+                <div class="box-inline">
+                    <div class="const">视频下载地址：</div>
+                    <div class="getdata"><a class="video-link" href="##" target="_blank">右键另存为</a></div>
+                </div>
+            </div>
+            <hr>
+
+        </div>
+
+
+    </div>
+    <div class="share-container">
+
+    </div>
+
+    <script src="./vendor/jquery.min.js"></script>
+    <script src="./vendor/bootstrap.min.js"></script>
+    <script src="./vendor/angular.min.js"></script>
+    <script src="./getshareinfo.js"></script>
+</body>
+
+</html>

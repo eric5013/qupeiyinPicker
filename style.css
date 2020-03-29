@@ -1,0 +1,19 @@
+/* style.css */
+.box-inline{
+    display: flex;
+    flex-direction: row;
+}
+.detail{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+.share-container{
+    display: none;
+}
+form{
+    margin-top: 1rem;
+}
+.no-display{
+    display: none;
+}
