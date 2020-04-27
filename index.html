@@ -13,14 +13,33 @@
 <body>
     <div class="container">
         <!-- load JSON file (include share URL)-->
+        <h2 class="doc-title">趣配音作品数据采集</h2>
+<!--搜索模块-->
+        <form class="input-group mb-3 search-container never-display">
 
-        <form class="input-group mb-3">
-            <input type="search" autocomplete="off" autocorrect="off" class="form-control search-input" id="search-input" placeholder="请将趣配音分享链接粘贴于此处" aria-label="请将趣配音分享链接粘贴于此处" aria-describedby="button-search">
+            <input type="text" autocomplete="on" autocorrect="off" class="form-control search-input" id="search-input" placeholder="请将趣配音分享链接粘贴于此处" aria-label="请将趣配音分享链接粘贴于此处" aria-describedby="button-search" >
+            <input type="text" class="form-control" style="display:none">
             <!-- <input type="search" autocomplete="off" autocorrect="off" maxlength="64" id="index-kw" name="word" class="se-input adjust-input" data-placeholder="" data-sa="" data-sug="1"> -->
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-search">查询</button>
             </div>
         </form>
+        <div class="input-group never-display">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04">载入JSON数据文件...</label>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" style="display: none">Button</button>
+            </div>
+        </div>
+        <div class="input-group never-display">
+            <button type="button" class="btn btn-info to-json" id="export-json">查询结果导出至JSON</button>
+            <button type="button" class="btn btn-info to-json" id="export-csv">查询结果导出至CSV</button>
+            <button type="button" class="btn btn-info to-json" id="multi-search">批量录入</button>
+        </div>
+        <div class="status">
+        </div>
 
         <div class="alert alert-primary single-search detail no-display">
             <div class="col author-info">
@@ -55,7 +74,7 @@
                 <div class="box-inline">
                     <div class="const">作品名称：</div>
                     <div class="getdata zpname"></div>
-                </div>
+            </div>
                 <hr>
                 <div class="box-inline">
                     <div class="const">上传时间：</div>
@@ -85,9 +104,34 @@
             <hr>
 
         </div>
+<!--        ["用户ID", "昵称", "作品名称", "上传日期", "播放次数", "点赞数", "采集时间", "视频链接", "源网址"]-->
+        <div class="table-container no-display">
+            <h2 class="doc-title">数据采集</h2>
+            <table class="table table-hover mytable">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">用户ID</th>
+                    <th scope="col">作品名称</th>
+                    <th scope="col">点赞数</th>
+                </tr>
+                </thead>
+                <tbody id="my-table-body">
+                </tbody>
+            </table>
+        </div>
 
-
+<!--        footer-->
+        <footer class="container-fluid footer">
+            <p>Powered by <a href="https://www.zengjianpeng.com" style="color:floralwhite;font-weight:700;">Eric Zeng </a></p>
+            <p>飞行学院配音大赛 特供版本<br/>&copy; 2020 All Rights Reserved.</p>
+        </footer>
     </div>
+
+
+
+
+
     <div class="share-container">
 
     </div>
@@ -95,6 +139,7 @@
     <script src="./vendor/jquery.min.js"></script>
     <script src="./vendor/bootstrap.min.js"></script>
     <script src="./vendor/angular.min.js"></script>
+    <script src="./vendor/filesaver.js"></script>
     <script src="./getshareinfo.js"></script>
 </body>
 

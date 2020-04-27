@@ -1,4 +1,25 @@
 /* style.css */
+body{
+    background: #2193b0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 100vh;
+}
+
+h2{
+    color: floralwhite;
+}
+
+.container{
+    margin: 0 auto;
+    max-width: 40rem;
+}
+
+.doc-title{
+    text-align: center;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+}
 .box-inline{
     display: flex;
     flex-direction: row;
@@ -14,6 +35,40 @@
 form{
     margin-top: 1rem;
 }
+
+.btn-outline-secondary{
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+footer{
+    margin-top: 5em;
+    text-align: center;
+    color: floralwhite !important;
+}
+
 .no-display{
     display: none;
+}
+
+.never-display{
+    display: none;
+}
+.status{
+    color: floralwhite;
+    display: flex;
+    flex-direction: column;
+    margin-top:.8rem;
+}
+.status-text{
+    color: floralwhite;
+    text-align: center;
+    font-size: 1rem;
+}
+.input-group{
+    margin-top: .5rem;
+}
+.btn-info{
+    margin-right: 1rem;
+    margin-top:.3rem;
 }
