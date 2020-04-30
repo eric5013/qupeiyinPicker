@@ -342,28 +342,35 @@ $("#button-search").click(function (event) {
 $("#multi-search").click(function () {
     console.log("批量录入开始");
     var multUrlArr = [];
-    var multUrlIndex = 0;
+    var multUrlIndex = multUrlArr.length;
     var continueLoop = true;
     while (continueLoop) {
         var thisURL = prompt("请粘贴趣配音链接，回车键输入下一个\n 已输入 " + multUrlIndex + " 个链接", "输入结束直接按回车结束搜索");
         if (thisURL === "输入结束直接按回车结束搜索") {
-            alert("搜索结束")
+            alert("搜索结束");
             continueLoop = false
         } else {
-            multUrlArr.push(thisURL);
-            console.info("第 " + multUrlIndex + " 个URL:" + thisURL);
-            multUrlIndex = multUrlIndex + 1;
+            if (checkUnique(thisURL, multUrlArr)) {
+                multUrlArr.push(thisURL);
+                console.info("第 " + multUrlIndex + " 个URL:" + thisURL);
+                search(thisURL);
+                multUrlIndex = multUrlIndex + 1;
+            } else {
+                alert("此链接已导入！已忽略此链接！")
+            }
         }
+
     }
     if (multUrlArr.length === 0) {
         alert("未输入数据！")
     } else {
-        for (var multLoop = 0; multLoop < multUrlArr.length; multLoop++) {
-            search(multUrlArr[multLoop]);
-        }
+        // for (var multLoop = 0; multLoop < multUrlArr.length; multLoop++) {
+        //     search(multUrlArr[multLoop]);
+        // }
         createStatus("已导入" + searchResult.length + "条记录")
     }
-})
+});
+
 $("#export-json").click(function (event) {
     exportDataToJSON()
 });
@@ -372,64 +379,72 @@ $("#export-csv").click(function (event) {
     exportDataToCSV()
 });
 
-
-function autoSearch() {
-    var query = window.location.search.substring(1);
-    if (query != "") {
-        if (query.match("url")) {
-            var searchUrl = query.replace("url=", "");
-            search(searchUrl);
-            var zpname = $(".zpname")[0].innerText;
-            $(".doc-title")[0].innerText = zpname + " 点赞统计";
-            document.title = zpname + " - 飞行学院配音大赛数据统计系统"
+function checkUnique(uniStr, uniArr) {
+    for (var w = 0; w < uniArr.length; w++) {
+        if (uniArr[w] === uniStr) {
+            return false
         }
-    } else {
-        $(".search-container").removeClass("never-display")
-        $(".search-container").removeClass("never-display")
-        $(".table-container").removeClass("never-display");
-        $(".input-group").removeClass("never-display");
-        console.log("show!")
+    }
+    return true
+}
+
+    function autoSearch() {
+        var query = window.location.search.substring(1);
+        if (query != "") {
+            if (query.match("url")) {
+                var searchUrl = query.replace("url=", "");
+                search(searchUrl);
+                var zpname = $(".zpname")[0].innerText;
+                $(".doc-title")[0].innerText = zpname + " 点赞统计";
+                document.title = zpname + " - 飞行学院配音大赛数据统计系统"
+            }
+        } else {
+            $(".search-container").removeClass("never-display")
+            $(".search-container").removeClass("never-display")
+            $(".table-container").removeClass("never-display");
+            $(".input-group").removeClass("never-display");
+            console.log("show!")
+        }
+
     }
 
-}
+    function createStatus(status) {
+        var ele = document.createElement("p");
+        ele.setAttribute("class", "status-text");
+        ele.innerHTML = status;
+        $(".status").append(ele);
+    }
 
-function createStatus(status) {
-    var ele = document.createElement("p");
-    ele.setAttribute("class", "status-text");
-    ele.innerHTML = status;
-    $(".status").append(ele);
-}
-
-var urlDict
-var inputElement = document.getElementById("inputGroupFile04");
-inputElement.addEventListener("change", handleFiles, false);
+    var urlDict
+    var inputElement = document.getElementById("inputGroupFile04");
+    inputElement.addEventListener("change", handleFiles, false);
 
 
-function handleFiles() {
-    var selectedFile = document.getElementById("inputGroupFile04").files[0];//获取读取的File对象
-    var name = selectedFile.name;//读取选中文件的文件名
-    var size = selectedFile.size;//读取选中文件的大小
-    console.log("文件名:" + name + "大小：" + size);
-    var reader = new FileReader();//这里是核心！！！读取操作就是由它完成的。
-    reader.readAsText(selectedFile);//读取文件的内容
+    function handleFiles() {
+        var selectedFile = document.getElementById("inputGroupFile04").files[0];//获取读取的File对象
+        var name = selectedFile.name;//读取选中文件的文件名
+        var size = selectedFile.size;//读取选中文件的大小
+        console.log("文件名:" + name + "大小：" + size);
+        var reader = new FileReader();//这里是核心！！！读取操作就是由它完成的。
+        reader.readAsText(selectedFile);//读取文件的内容
 
-    reader.onload = function () {
-        console.log(this.result);//当读取完成之后会回调这个函数，然后此时文件的内容存储到了result中。直接操作即可。
-        urlDict = JSON.parse(this.result)
-        createStatus("读取成功！共读取" + urlDict.length + "条信息")
-        $(".table-container").removeClass("no-display")
-        for (var searchItem = 0; searchItem < urlDict.length; searchItem++) {
-            if (urlDict[searchItem].id == "数据被删除") {
-                saveResult("数据被删除", "", "", "", "", "", getDateTimeNow(), "", urlDict[searchItem].url)
-                addToList("!", "N/A", "数据被删除", "N/A", urlDict[searchItem].url);
-            } else {
-                search(urlDict[searchItem].url)
+        reader.onload = function () {
+            console.log(this.result);//当读取完成之后会回调这个函数，然后此时文件的内容存储到了result中。直接操作即可。
+            urlDict = JSON.parse(this.result)
+            createStatus("读取成功！共读取" + urlDict.length + "条信息")
+            $(".table-container").removeClass("no-display")
+            for (var searchItem = 0; searchItem < urlDict.length; searchItem++) {
+                if (urlDict[searchItem].id == "数据被删除") {
+                    saveResult("数据被删除", "", "", "", "", "", getDateTimeNow(), "", urlDict[searchItem].url)
+                    addToList("!", "N/A", "数据被删除", "N/A", urlDict[searchItem].url);
+                } else {
+                    search(urlDict[searchItem].url)
+                }
             }
-        }
-        createStatus("于" + getDateTimeNow() + "完成" + name + "的数据更新，\n请点击保存至JSON/CSV完成数据导出")
+            createStatus("于" + getDateTimeNow() + "完成" + name + "的数据更新，\n请点击保存至JSON/CSV完成数据导出")
 
-    };
-}
+        };
+    }
 
 //监听事件：注册列表事件
 // var mytable = document.getElementById("my-table-body");
@@ -442,7 +457,7 @@ function handleFiles() {
 //     });
 // }
 
-window.onload = function () {
-    autoSearch()
-}
+    window.onload = function () {
+        autoSearch()
+    };
 
