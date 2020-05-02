@@ -244,12 +244,19 @@ function toCSV(array) {
     var result = ""
     var lastIndex = array.length - 1;
     for (i = 0; i < array.length; i++) {
+
         if (i != lastIndex) {
-            result = result + array[i] + ",";
+            //bugfix: 避免作品名称中逗号输出为"-"号
+            result = result + array[i].replace(",","-") + ",";
         } else {
             result = result + array[i] + "\n";
         }
     }
+    //bugfix:输出趣配音ID时减少人工处理
+    var regXg1 = new RegExp("/[0-9]{8},","g")
+    var regXg2 = new RegExp("/无数据,","g")
+    result = result.replace(regXg1,",");
+    result = result.replace(regXg2,",")
     return result
 }
 
@@ -397,6 +404,12 @@ function checkUnique(uniStr, uniArr) {
                 var zpname = $(".zpname")[0].innerText;
                 $(".doc-title")[0].innerText = zpname + " 点赞统计";
                 document.title = zpname + " - 飞行学院配音大赛数据统计系统"
+            }else{
+                alert("请求参数非法，请使用系统浏览器重试！");
+                // if(window.location.origin !== "https://www.zengjianpeng.com"){
+                //     window.location = "https://www.zengjianpeng.com"
+                // }
+
             }
         } else {
             $(".search-container").removeClass("never-display")
